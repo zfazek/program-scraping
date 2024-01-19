@@ -1,5 +1,5 @@
 use chrono::{Local, NaiveDate};
-use curl::easy::Easy;
+//use curl::easy::Easy;
 use regex::{self, Regex};
 use std::collections::BTreeMap;
 
@@ -7,6 +7,7 @@ use crate::SEP;
 use crate::WEEK_DAYS;
 
 pub(crate) fn scrape() {
+    /*
     let mut web_page = String::new();
     let mut handle = Easy::new();
     handle.url("https://sportaktiv.hu/fooldal/").unwrap();
@@ -19,6 +20,7 @@ pub(crate) fn scrape() {
         .unwrap();
     transer.perform().unwrap();
     drop(transer);
+    */
     let web_page = include_str!("../sportaktiv_hu_index.html");
     let re = Regex::new(r#"Időpont: (\d+)\. (.*) (\d+)\..*túráról:&nbsp;(.*)<"#).unwrap();
     let re_link = Regex::new(r#"href="(.*)" class.*bővebben"#).unwrap();
@@ -26,6 +28,7 @@ pub(crate) fn scrape() {
         process_line(line, &re);
         process_link(line, &re_link);
     }
+    println!();
 }
 
 fn process_line(line: &str, re: &Regex) {
@@ -58,7 +61,7 @@ fn process_line(line: &str, re: &Regex) {
         }
         if let Ok(dt) = NaiveDate::parse_from_str(date.as_str(), "%Y.%m.%d") {
             let today = now.date_naive();
-            if today < dt {
+            if today <= dt {
                 let week_day = WEEK_DAYS[dt.format("%u").to_string().parse::<usize>().unwrap() - 1];
                 print!(
                     "{}{}{}{}kerékpár{}Balatonfüred{}{}{}",

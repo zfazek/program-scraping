@@ -14,7 +14,7 @@ static WEEK_DAYS: [&str; 7] = [
 ];
 
 fn main() {
-    brm::scrape();
     borze::scrape();
+    brm::scrape();
     sportaktiv::scrape();
 }

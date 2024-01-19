@@ -34,6 +34,7 @@ pub(crate) fn scrape() {
         process_location(line, &mut link, &mut name, &re_link_title);
         process_varos(line, &link, &name, &re_varos);
     }
+    println!();
 }
 
 fn process_month(line: &str, month: &mut String, re_month: &Regex) {
@@ -68,7 +69,7 @@ fn process_day(line: &str, re_day: &Regex, month: &str) {
         let date = year + "." + month + day.as_str();
         if let Ok(dt) = NaiveDate::parse_from_str(date.as_str(), "%Y.%m.%d") {
             let today = now.date_naive();
-            if today < dt {
+            if today <= dt {
                 let week_day = WEEK_DAYS[dt.format("%u").to_string().parse::<usize>().unwrap() - 1];
                 print!("\n{}{}{}{}kerékpár{}", date, SEP, week_day, SEP, SEP);
             }

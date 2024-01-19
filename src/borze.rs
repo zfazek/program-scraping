@@ -85,7 +85,7 @@ fn process_idopont(line: &str, re_idopont: &Regex) {
         if let Ok(dt) = NaiveDate::parse_from_str(date.as_str(), "%Y.%m.%d") {
             let now = Local::now();
             let today = now.date_naive();
-            if today < dt {
+            if today <= dt {
                 let week_day = WEEK_DAYS[dt.format("%u").to_string().parse::<usize>().unwrap() - 1];
                 print!("\n{}{}{}{}ásványbörze{}", date, SEP, week_day, SEP, SEP);
             }
