@@ -79,7 +79,7 @@ fn process_day(line: &str, re_day: &Regex, month: &str) {
 
 fn process_location(line: &str, link: &mut String, name: &mut String, re_link_title: &Regex) {
     if let Some(link_title) = re_link_title.captures(line) {
-        *link = "https://www.brmhungary.hu/rendezvenyek".to_owned()
+        *link = "https://www.brmhungary.hu".to_owned()
             + link_title.get(1).unwrap().as_str();
         *name = link_title.get(2).unwrap().as_str().to_string();
     }
